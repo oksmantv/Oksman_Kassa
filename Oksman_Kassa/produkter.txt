@@ -1,4 +1,4 @@
-10,6,"st","Banana"
-20,20,"st","Oks Cola 1L"
-30,5,"kg","Fresh Potatoes"
-30,90,"kg","Minced Meat"
+10,6,st,Banana
+20,20,st,Oks Cola 1L
+30,5,kg,Fresh Potatoes
+30,90,kg,Minced Meat

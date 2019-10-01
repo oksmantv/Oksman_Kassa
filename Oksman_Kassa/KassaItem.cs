@@ -6,20 +6,20 @@ using System.Threading.Tasks;
 
 namespace Oksman_Kassa
 {
-    public class Produkt
+    public class KassaItem
     {
-        public int ProductID;
+        public double Amount;
         public double Pris;
         public string Typ;
         public string Namn;
 
-        public Produkt(int productID, double pris, string typ, string namn)
+        public KassaItem(string namn, double pris, string typ, double amount)
         {
-            this.ProductID = productID;
+            this.Amount = amount;
             this.Pris = pris;
             this.Typ = typ;
             this.Namn = namn;
         }
-        
+
     }
 }

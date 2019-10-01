@@ -12,6 +12,7 @@ namespace Oksman_Kassa
         public static void Kassa ()
         {
             var ProductList = new List<Produkt>();
+            var ItemList = new List<KassaItem>();
 
             DateTime KvittoTime = DateTime.Now;
 
@@ -21,22 +22,45 @@ namespace Oksman_Kassa
                 while ((Rad = Filen.ReadLine()) != null)
                 {
                     String[] ProductInfo = Rad.Split(',');
-                    int ProductID = int.Parse(ProductInfo[0]);
+                    int productID = int.Parse(ProductInfo[0]);
                     double Pris = double.Parse(ProductInfo[1]);
 
-                    var Produkt = new Produkt(ProductID,Pris, ProductInfo[2], ProductInfo[3]);
+                    var Produkt = new Produkt(productID,Pris, ProductInfo[2], ProductInfo[3]);
                     ProductList.Add(Produkt);
 
                 }
             }
 
-
             Console.WriteLine("KASSA");
             Console.WriteLine("KVITTO\r\r{0}", KvittoTime);
+
             Console.WriteLine("Total: {1}");
             Console.WriteLine("kommandon:\n<productid> <antal>\nPAY");
             Console.Write("Kommando:");
 
+
+            string UserInput = Console.ReadLine();
+            String[] KommandoInfo = UserInput.Split(' ');
+
+            int ProductID = int.Parse(KommandoInfo[0]);
+            int ProductAmount = int.Parse(KommandoInfo[1]);
+
+                foreach (Produkt P in ProductList)
+                {
+
+                    if (ProductID == P.ProductID)
+                    { 
+                        var Item = new KassaItem(P.Namn, P.Pris, P.Typ, ProductAmount);
+                        ItemList.Add(Item);
+
+                    }       
+
+                }
+
+            switch (UserInput)
+            {
+
+            }
 
         }
 
