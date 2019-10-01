@@ -48,8 +48,6 @@ namespace Oksman_Kassa
             bool Kassa_Active = true;
             while(Kassa_Active)
             {
-
-
                 int UserInput = Menu.OpenStartMenu();
                 switch (UserInput)
                 {

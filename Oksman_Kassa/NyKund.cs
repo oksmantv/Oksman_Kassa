@@ -13,6 +13,7 @@ namespace Oksman_Kassa
         {
             var ProductList = new List<Produkt>();
             var ItemList = new List<KassaItem>();
+            
 
             DateTime KvittoTime = DateTime.Now;
 
@@ -31,39 +32,63 @@ namespace Oksman_Kassa
                 }
             }
 
-            Console.WriteLine("KASSA");
-            Console.WriteLine("KVITTO\r\r{0}", KvittoTime);
-
-            Console.WriteLine("Total: {1}");
-            Console.WriteLine("kommandon:\n<productid> <antal>\nPAY");
-            Console.Write("Kommando:");
-
-
-            string UserInput = Console.ReadLine();
-            String[] KommandoInfo = UserInput.Split(' ');
-
-            int ProductID = int.Parse(KommandoInfo[0]);
-            int ProductAmount = int.Parse(KommandoInfo[1]);
-
-                foreach (Produkt P in ProductList)
+            double TotalSumma;
+            int ProductID;
+            int ProductAmount;
+            while (true)
+            {      
+                while (true)
                 {
+                    Console.Clear();
+                    Console.WriteLine("KASSA");
+                    Console.WriteLine("KVITTO    {0}", KvittoTime);
 
-                    if (ProductID == P.ProductID)
-                    { 
-                        var Item = new KassaItem(P.Namn, P.Pris, P.Typ, ProductAmount);
-                        ItemList.Add(Item);
+                    if (ItemList.Count > 0)
+                    {
+                        TotalSumma = 0;
+                        foreach (KassaItem K in ItemList)
+                        {
+                        
+                            Console.WriteLine("{0} {1} * {2} = {3}", K.Namn, K.Amount, K.Pris.ToString("0.00"), K.Total.ToString("0.00"));
+                        
+                            TotalSumma += K.Total;
+                        }
+                        Console.WriteLine("Total: {0}", TotalSumma.ToString("0.00"));
+                    }
+                
+                    Console.WriteLine("kommandon:\n<productid> <antal>\nPAY");
+                    Console.Write("Kommando:");
+                
+                        string UserInput = Console.ReadLine();
+                    if (UserInput == "PAY") { Kvitto.CreateKvitto(KvittoTime, ItemList); return; }
 
-                    }       
+                        if (UserInput.Contains(" "))
+                        {
+                            String[] KommandoInfo = UserInput.Split(' ');
+                        try
+                        {
+                            ProductID = int.Parse(KommandoInfo[0]);
+                            ProductAmount = int.Parse(KommandoInfo[1]);
+                            break;
+                        }
+                        catch { }
 
+                        }
                 }
+                    foreach (Produkt P in ProductList)
+                    {
 
-            switch (UserInput)
-            {
+                        if (ProductID == P.ProductID)
+                        {
+                            var Item = new KassaItem(P.Namn, P.Pris, P.Typ, ProductAmount);
+                            ItemList.Add(Item);
 
+                        }
+
+                    }
             }
 
         }
-
 
     }
 }

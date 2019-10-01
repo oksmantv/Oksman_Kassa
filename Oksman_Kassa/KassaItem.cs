@@ -12,6 +12,7 @@ namespace Oksman_Kassa
         public double Pris;
         public string Typ;
         public string Namn;
+        public double Total;
 
         public KassaItem(string namn, double pris, string typ, double amount)
         {
@@ -19,6 +20,7 @@ namespace Oksman_Kassa
             this.Pris = pris;
             this.Typ = typ;
             this.Namn = namn;
+            this.Total = pris * amount;
         }
 
     }
