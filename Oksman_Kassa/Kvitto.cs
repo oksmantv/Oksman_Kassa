@@ -12,6 +12,7 @@ namespace Oksman_Kassa
         {
             DateTime Time = time;
             var Listan = List;
+            int Index;
 
             String DatumFormat = Time.ToString("yyyMMdd");
             String TimeFormat = Time.ToString("hhmmss");
@@ -19,33 +20,38 @@ namespace Oksman_Kassa
 
             if (System.IO.File.Exists(ReceiptPath))
             {
+                string Text = System.IO.File.ReadAllText(ReceiptPath);
+                string [] TextList = Text.Split('#');
+                if (TextList == null) { Index = 1; }
+                else { Index = TextList.Length; }
+
                 using (var Filen = System.IO.File.AppendText(ReceiptPath))
                 {
-                    Filen.Write("#");
+                    Filen.Write(Index+",");
 
                         foreach (KassaItem K in Listan)
                         {
-                            Filen.WriteLine(TimeFormat+","+K.Namn + "," + K.Pris + "," + K.Typ + "," + K.Amount + "," + K.Total);
+                            Filen.Write(K.Namn + "," + K.Pris + "," + K.Typ + "," + K.Amount + "," + K.Total);
 
                         }
-
+                    Filen.WriteLine("#");
 
                 }
 
             }
             else
             {
-                System.IO.File.Create(ReceiptPath);
+                
                 using (var Filen = System.IO.File.CreateText(ReceiptPath))
                 {
-                    Filen.Write("#");
+                    Filen.Write(1 + ",");
 
                     foreach (KassaItem K in Listan)
                     {
-                        Filen.WriteLine(K.Namn + "," + K.Pris + "," + K.Typ + "," + K.Amount + "," + K.Total);
+                        Filen.Write(K.Namn + "," + K.Pris + "," + K.Typ + "," + K.Amount + "," + K.Total);
 
                     }
-
+                    Filen.WriteLine("#");
 
                 }
             }

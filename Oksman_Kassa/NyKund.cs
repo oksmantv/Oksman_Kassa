@@ -53,6 +53,7 @@ namespace Oksman_Kassa
                         
                             TotalSumma += K.Total;
                         }
+                        if (TotalSumma > 1000)
                         Console.WriteLine("Total: {0}", TotalSumma.ToString("0.00"));
                     }
                 

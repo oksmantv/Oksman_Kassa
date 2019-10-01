@@ -1,6 +1,4 @@
-#060038,Banana,6,st,3,18
-060038,Oks Cola 1L,20,st,7,140
-060038,Minced Meat,90,kg,3,270
-#060131,Banana,6,st,5,30
-060131,Oks Cola 1L,20,st,60,1200
-060131,Fresh Potatoes,5,kg,4,20
+1,Banana,6,st,5,30#
+2,Oks Cola 1L,20,st,5,100#
+3,Fresh Potatoes,5,kg,4,20#
+4,Minced Meat,90,kg,3,270#
