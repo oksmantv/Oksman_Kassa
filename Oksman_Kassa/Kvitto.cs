@@ -12,31 +12,39 @@ namespace Oksman_Kassa
         {
             DateTime Time = time;
             var Listan = List;
-            int Index;
+            int Count;
 
             String DatumFormat = Time.ToString("yyyMMdd");
             String TimeFormat = Time.ToString("hhmmss");
             String ReceiptPath = @"../../RECEIPT_" + DatumFormat + ".txt";
+            String CountPath = @"../../TotalCount.txt";
 
-            if (System.IO.File.Exists(ReceiptPath))
+            if (System.IO.File.Exists(CountPath))
             {
-                string Text = System.IO.File.ReadAllText(ReceiptPath);
-                string [] TextList = Text.Split('#');
-                if (TextList == null) { Index = 1; }
-                else { Index = TextList.Length; }
+                string Text = System.IO.File.ReadAllText(CountPath);
+                string[] TextList = Text.Split(',');
+                Text.Split(',').Select(Int32.Parse).ToArray();
+                int MaxVal = Text.Max();
+                Count = Text.ToList().IndexOf(MaxVal);
+                
 
-                using (var Filen = System.IO.File.AppendText(ReceiptPath))
-                {
-                    Filen.Write(Index+",");
+            }
+                if (System.IO.File.Exists(ReceiptPath))
+            {
+                
 
-                        foreach (KassaItem K in Listan)
-                        {
-                            Filen.Write(K.Namn + "," + K.Pris + "," + K.Typ + "," + K.Amount + "," + K.Total);
 
-                        }
-                    Filen.WriteLine("#");
 
-                }
+                    using (var Filen = System.IO.File.AppendText(ReceiptPath))
+                    {
+                        Filen.Write("#");
+
+                            foreach (KassaItem K in Listan)
+                            {
+                                Filen.Write(K.Namn + "," + K.Pris + "," + K.Typ + "," + K.Amount + "," + K.Total);
+                            }
+
+                    }
 
             }
             else
@@ -44,14 +52,13 @@ namespace Oksman_Kassa
                 
                 using (var Filen = System.IO.File.CreateText(ReceiptPath))
                 {
-                    Filen.Write(1 + ",");
-
+                    Filen.WriteLine("#");
                     foreach (KassaItem K in Listan)
                     {
                         Filen.Write(K.Namn + "," + K.Pris + "," + K.Typ + "," + K.Amount + "," + K.Total);
 
                     }
-                    Filen.WriteLine("#");
+                    
 
                 }
             }

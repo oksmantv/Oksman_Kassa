@@ -70,6 +70,7 @@ namespace Oksman_Kassa
                         {
                             ProductID = int.Parse(KommandoInfo[0]);
                             ProductAmount = int.Parse(KommandoInfo[1]);
+                            if (ProductAmount < 0) continue;
                             break;
                         }
                         catch { }
