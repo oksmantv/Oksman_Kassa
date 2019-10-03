@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+// TEST
+
 namespace Oksman_Kassa
 {
     class NyKund

@@ -35,7 +35,7 @@ kvitton åt
 Objektorienterad kod!
 Console-applikation
 Felhantering: korrekta inmatningar osv osv
-
+// TEST
 */
 
 
