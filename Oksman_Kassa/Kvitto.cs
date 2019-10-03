@@ -68,6 +68,8 @@ namespace Oksman_Kassa
             DateTime Time = time;
             double TotalSumma = 0;
             double TotalRabatt = 0;
+            double Rabatt=0;
+
             var KvittoListan = new List<String>();
 
             String DatumFormat = Time.ToString("yyyMMdd");
@@ -112,7 +114,7 @@ namespace Oksman_Kassa
                     if (K == "\r\n" || K == "") { }
                     else
                     { 
-                        Console.WriteLine("KASSA");
+                        Console.WriteLine("\nKASSA");
                         Console.WriteLine("KVITTO    {0}", Time);
                         
 
@@ -127,22 +129,35 @@ namespace Oksman_Kassa
                                 TotalSumma += C.Total;
                             }
 
+                            Console.WriteLine("Items Total: {0}", TotalSumma.ToString("0.00"));
 
-                            
+                            if (TotalSumma > 1000 && TotalSumma < 2000)
+                            {
+                                Rabatt = (TotalSumma * 0.01) * -1;
+                                TotalRabatt = TotalSumma * 0.99;
+                                Console.WriteLine("Rabatt: {0}", Rabatt.ToString("0.00"));
+                                Console.WriteLine("Total: {0}", TotalRabatt.ToString("0.00"));
+                              
+                            }
+
+                            else if (TotalSumma > 2000)
+                            {
+                                Rabatt = (TotalSumma * 0.02) * -1;
+                                TotalRabatt = TotalSumma * 0.98;
+                                Console.WriteLine("Rabatt: {0}", Rabatt.ToString("0.00"));
+                                Console.WriteLine("Total: {0}", TotalRabatt.ToString("0.00"));
+                            }
+
                         }
                     }
             }
-                            if (TotalSumma > 1000 && TotalSumma < 2000)
-                            {
-       
-                            }
 
-                            if (TotalSumma > 2000)
-                            {
+                            
 
-                            }
 
-                            Console.WriteLine("Total: {0}", TotalSumma.ToString("0.00\n"));
+
+
+                            
         }
     }
 }
