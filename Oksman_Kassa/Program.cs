@@ -61,7 +61,10 @@ namespace Oksman_Kassa
                             int[] TrueDate = Array.ConvertAll<string, int>(dates, int.Parse);
 
                             DateTime Datum = new DateTime(TrueDate[0], TrueDate[1], TrueDate[2]);
-                            Kvitto.ReadKvitto(Datum); return;
+                            Kvitto.ReadKvitto(Datum);
+                            Console.WriteLine("Tryck Enter för att gå tillbaka..");
+                            Console.ReadLine();
+                            Console.Clear(); break;
                         }
 
                 }

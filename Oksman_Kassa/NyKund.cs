@@ -35,6 +35,8 @@ namespace Oksman_Kassa
             }
 
             double TotalSumma;
+            double Rabatt=0;
+            double TotalRabatt=0;
             int ProductID;
             int ProductAmount;
             while (true)
@@ -90,7 +92,7 @@ namespace Oksman_Kassa
                                     if (ProductAmount < 0) continue;
                                     break;
                                 }
-                                catch { }
+                                catch(Exception E) { Console.WriteLine("Exception {0} Found.",E); }
 
                         }
                 }
@@ -99,7 +101,7 @@ namespace Oksman_Kassa
 
                         if (ProductID == P.ProductID)
                         {
-                            var Item = new KassaItem(P.Namn, P.Pris, P.Typ, ProductAmount,P.ProductID);
+                            var Item = new KassaItem(P.Namn, P.Pris, P.Typ, ProductAmount,P.ProductID,TotalRabatt,Rabatt);
                             ItemList.Add(Item);
 
                         }
