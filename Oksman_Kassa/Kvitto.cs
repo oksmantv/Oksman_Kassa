@@ -38,7 +38,7 @@ namespace Oksman_Kassa
 
                     foreach (KassaItem K in Listan)
                     {
-                        Filen.Write(K.Namn + "," + K.Pris + "," + K.Typ + "," + K.Amount + "," + K.Total + "," + K.ProductID + "," + K.Rabatt + "*") ;
+                        Filen.Write(K.Namn + "," + K.Pris + "," + K.Typ + "," + K.Amount + "," + K.Total + "," + K.ProductID + "," + K.TotalRabatt+","+ K.Rabatt + "*") ;
                     }
                     Filen.Write("#");
                 }
@@ -52,7 +52,7 @@ namespace Oksman_Kassa
                     
                     foreach (KassaItem K in Listan)
                     {
-                        Filen.Write(K.Namn + "," + K.Pris + "," + K.Typ + "," + K.Amount + "," + K.Total + "," + K.ProductID + "," + K.Rabatt + "*");
+                        Filen.Write(K.Namn + "," + K.Pris + "," + K.Typ + "," + K.Amount + "," + K.Total + "," + K.ProductID + "," + K.TotalRabatt + "," + K.Rabatt + "*");
 
                     }
                     Filen.Write("#");
@@ -72,6 +72,9 @@ namespace Oksman_Kassa
             String ReceiptPath = @"../../RECEIPT_" + DatumFormat + ".txt";
             String CountPath = @"../../TotalCount.txt";
 
+            double Rabatt = 0;
+            double TotalRabatt = 0;
+
             string Text = System.IO.File.ReadAllText(ReceiptPath);
             string[] KvittoList = Text.Split('#');
             Console.Clear();
@@ -87,7 +90,7 @@ namespace Oksman_Kassa
                 foreach (String S in ItemList)
                 {
 
-                    if (S == "\r\n") { }
+                    if (S == "\r\n" || S == "") { }
                     else
                     {
                         string[] DataList = S.Split(',');
@@ -97,14 +100,16 @@ namespace Oksman_Kassa
                         string Typ = DataList[2];
                         double Amount = double.Parse(DataList[3]);
                         int productID = int.Parse(DataList[4]);
+                        TotalRabatt = double.Parse(DataList[5]);
+                        Rabatt = double.Parse(DataList[6]);
 
-                        var Item = new KassaItem(DataList[0], Pris, Typ, Amount, productID);
+                        var Item = new KassaItem(DataList[0], Pris, Typ, Amount, productID,TotalRabatt,Rabatt);
                         ItemListan.Add(Item);
                     }
 
                 }
 
-                    if (K == "\r\n") { }
+                if (K == "\r\n" || K == "") { }
                     else
                     { 
                         Console.WriteLine("KASSA");
@@ -121,10 +126,27 @@ namespace Oksman_Kassa
                                 TotalSumma += C.Total;
                             }
 
-                            //if (TotalSumma > 1000)
-                            Console.WriteLine("Total: {0}", TotalSumma.ToString("0.00\n"));
+
+                        Console.WriteLine("Items Total: {0}", TotalSumma.ToString("0.00"));
+
+                        if (TotalSumma > 1000 && TotalSumma < 2000)
+                        {
+                            Rabatt = (TotalSumma / 100) * -1;
+                            TotalRabatt = TotalSumma - (TotalSumma / 100);
+                            Console.WriteLine("Rabatt: {0}", Rabatt.ToString("0.00"));
+                            Console.WriteLine("Total: {0}", TotalRabatt.ToString("0.00"));
                         }
+
+                        if (TotalSumma > 2000)
+                        {
+                            Rabatt = ((TotalSumma / 100) * 2) * -1;
+                            TotalRabatt = TotalSumma - (TotalSumma / 100);
+                            Console.WriteLine("Rabatt: {0}", Rabatt.ToString("0.00"));
+                            Console.WriteLine("Total: {0}\n", TotalRabatt.ToString("0.00"));
+                        }
+
                     }
+                }
             }
 
             Console.ReadLine();

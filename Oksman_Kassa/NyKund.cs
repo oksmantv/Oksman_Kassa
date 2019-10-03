@@ -33,8 +33,11 @@ namespace Oksman_Kassa
             }
 
             double TotalSumma;
+            double Rabatt=0;
+            double TotalRabatt=0;
             int ProductID;
             int ProductAmount;
+
             while (true)
             {      
                 while (true)
@@ -53,11 +56,29 @@ namespace Oksman_Kassa
                         
                             TotalSumma += K.Total;
                         }
-                        if (TotalSumma > 1000)
-                        Console.WriteLine("Total: {0}", TotalSumma.ToString("0.00"));
+
+                        Console.WriteLine("Items Total: {0}", TotalSumma.ToString("0.00"));
+
+                        if (TotalSumma > 1000 && TotalSumma < 2000)
+                        {
+                            Rabatt = (TotalSumma / 100) * -1;
+                            TotalRabatt = TotalSumma - (TotalSumma / 100);
+                            Console.WriteLine("Rabatt: {0}", Rabatt.ToString("0.00"));
+                            Console.WriteLine("Total: {0}", TotalRabatt.ToString("0.00"));
+                        }
+
+                        if (TotalSumma > 2000)
+                        {
+                            Rabatt = ((TotalSumma / 100) * 2) * -1;
+                            TotalRabatt = TotalSumma - (TotalSumma / 100);
+                            Console.WriteLine("Rabatt: {0}", Rabatt.ToString("0.00"));
+                            Console.WriteLine("Total: {0}", TotalRabatt.ToString("0.00"));
+                        }
+
+                        
                     }
                 
-                    Console.WriteLine("kommandon:\n<productid> <antal>\nPAY\nRETURN <productid>");
+                    Console.WriteLine("\nKommandon:\n<productid> <antal>\nRETURN <productid>\nPAY");
                     Console.Write("Kommando:");
                 
                     string UserInput = Console.ReadLine();
@@ -97,7 +118,7 @@ namespace Oksman_Kassa
 
                         if (ProductID == P.ProductID)
                         {
-                            var Item = new KassaItem(P.Namn, P.Pris, P.Typ, ProductAmount,P.ProductID);
+                            var Item = new KassaItem(P.Namn, P.Pris, P.Typ, ProductAmount,P.ProductID,TotalRabatt,Rabatt);
                             ItemList.Add(Item);
 
                         }
