@@ -22,6 +22,32 @@ namespace Oksman_Kassa
             this.Typ = typ;
             this.Namn = namn;
         }
+
+         public static List<Produkt> GetProducts()
+    {
+            var ProductList = new List<Produkt>();
+
+            using (System.IO.StreamReader Filen = System.IO.File.OpenText(@"../../produkter.txt"))
+            {
+                string Rad;
+                while ((Rad = Filen.ReadLine()) != null)
+                {
+                    String[] ProductInfo = Rad.Split(',');
+                    int productID = int.Parse(ProductInfo[0]);
+                    double Pris = double.Parse(ProductInfo[1]);
+
+                    var Produkt = new Produkt(productID,Pris, ProductInfo[2], ProductInfo[3]);
+                    ProductList.Add(Produkt);
+
+                }
+            }
+
+            return ProductList;
+
+    }
         
     }
+
+   
+
 }
