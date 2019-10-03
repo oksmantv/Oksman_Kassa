@@ -13,14 +13,16 @@ namespace Oksman_Kassa
         public string Typ;
         public string Namn;
         public double Total;
+        public int ProductID;
 
-        public KassaItem(string namn, double pris, string typ, double amount)
+        public KassaItem(string namn, double pris, string typ, double amount, int productID)
         {
             this.Amount = amount;
             this.Pris = pris;
             this.Typ = typ;
             this.Namn = namn;
             this.Total = pris * amount;
+            this.ProductID = productID;
         }
 
     }

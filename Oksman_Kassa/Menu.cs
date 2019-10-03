@@ -13,6 +13,7 @@ namespace Oksman_Kassa
             Console.WriteLine("KASSA");
             Console.WriteLine("1. Ny Kund");
             Console.WriteLine("2. Avsluta");
+            Console.WriteLine("3. Läs Kvitto");
 
             int userInput;
             while (!int.TryParse(Console.ReadLine(), out userInput)) { Console.WriteLine("Ange endast siffror i din inmatning"); }

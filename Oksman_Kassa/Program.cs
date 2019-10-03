@@ -53,6 +53,16 @@ namespace Oksman_Kassa
                 {
                     case 1: { NyKund.Kassa(); break; }
                     case 2: { Kassa_Active = false; return; }
+                    case 3:
+                        {
+                            Console.WriteLine("Input Date: 2019,10,02");
+                            string DateInput = Console.ReadLine();
+                            string[] dates = DateInput.Split(',');
+                            int[] TrueDate = Array.ConvertAll<string, int>(dates, int.Parse);
+
+                            DateTime Datum = new DateTime(TrueDate[0], TrueDate[1], TrueDate[2]);
+                            Kvitto.ReadKvitto(Datum); return;
+                        }
 
                 }
 

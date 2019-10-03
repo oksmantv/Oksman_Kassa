@@ -1,1 +1,1 @@
-1,Banana,6,st,4,24Oks Cola 1L,20,st,5,100Fresh Potatoes,5,kg,2,10Minced Meat,90,kg,6,540#
+Banana,6,st,5,300*Oks Cola 1L,20,st,4,800*Fresh Potatoes,5,kg,5,250*#

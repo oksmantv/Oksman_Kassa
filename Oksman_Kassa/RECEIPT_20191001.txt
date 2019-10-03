@@ -1,4 +1,0 @@
-1,Banana,6,st,5,30#
-2,Oks Cola 1L,20,st,5,100#
-3,Fresh Potatoes,5,kg,4,20#
-4,Minced Meat,90,kg,3,270#

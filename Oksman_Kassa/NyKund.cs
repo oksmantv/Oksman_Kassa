@@ -57,23 +57,38 @@ namespace Oksman_Kassa
                         Console.WriteLine("Total: {0}", TotalSumma.ToString("0.00"));
                     }
                 
-                    Console.WriteLine("kommandon:\n<productid> <antal>\nPAY");
+                    Console.WriteLine("kommandon:\n<productid> <antal>\nPAY\nRETURN <productid>");
                     Console.Write("Kommando:");
                 
-                        string UserInput = Console.ReadLine();
+                    string UserInput = Console.ReadLine();
                     if (UserInput == "PAY") { Kvitto.CreateKvitto(KvittoTime, ItemList); return; }
 
                         if (UserInput.Contains(" "))
                         {
                             String[] KommandoInfo = UserInput.Split(' ');
-                        try
-                        {
-                            ProductID = int.Parse(KommandoInfo[0]);
-                            ProductAmount = int.Parse(KommandoInfo[1]);
-                            if (ProductAmount < 0) continue;
-                            break;
-                        }
-                        catch { }
+                            if (KommandoInfo[0] == "RETURN")
+                            {
+                                ProductID = int.Parse(KommandoInfo[1]);
+                                foreach (KassaItem P in ItemList)
+                                {
+
+                                    if (ProductID == P.ProductID)
+                                    {
+                                        ItemList.Remove(P);
+                                        break;
+                                    }
+
+                                }
+
+                            }
+                                try
+                                {
+                                    ProductID = int.Parse(KommandoInfo[0]);
+                                    ProductAmount = int.Parse(KommandoInfo[1]);
+                                    if (ProductAmount < 0) continue;
+                                    break;
+                                }
+                                catch { }
 
                         }
                 }
@@ -82,7 +97,7 @@ namespace Oksman_Kassa
 
                         if (ProductID == P.ProductID)
                         {
-                            var Item = new KassaItem(P.Namn, P.Pris, P.Typ, ProductAmount);
+                            var Item = new KassaItem(P.Namn, P.Pris, P.Typ, ProductAmount,P.ProductID);
                             ItemList.Add(Item);
 
                         }
