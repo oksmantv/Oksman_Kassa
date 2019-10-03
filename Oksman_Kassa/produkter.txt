@@ -1,4 +1,4 @@
 10,6,st,Banana
-20,20,st,Oks Cola 1L
+20,20,st,Cola 1 Litre
 30,5,kg,Fresh Potatoes
 40,90,kg,Minced Meat

@@ -83,7 +83,7 @@ namespace Oksman_Kassa
                     Console.Write("Kommando:");
                 
                     string UserInput = Console.ReadLine();
-                    if (UserInput == "PAY") { Kvitto.CreateKvitto(KvittoTime, ItemList); return; }
+                    if (UserInput == "PAY") { Kvitto.CreateKvitto(KvittoTime, ItemList); Console.Clear(); return; }
 
                         if (UserInput.Contains(" "))
                         {
@@ -110,7 +110,8 @@ namespace Oksman_Kassa
                                     if (ProductAmount < 0) continue;
                                     break;
                                 }
-                                catch(Exception E) { Console.WriteLine("Exception {0} Found.",E); }
+                                catch(Exception E) 
+                                { Console.WriteLine (E.Message); Console.ReadLine(); }
 
                         }
                 }
