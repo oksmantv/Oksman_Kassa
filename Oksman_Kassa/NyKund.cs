@@ -18,23 +18,9 @@ namespace Oksman_Kassa
             
 
             DateTime KvittoTime = DateTime.Now;
-            //var ProductList = Produkt.GetProducts();
+            var ProductList = Produkt.GetProducts();
 
-            var ProductList = new List<Produkt>();
-            using (System.IO.StreamReader Filen = System.IO.File.OpenText(@"../../produkter.txt"))
-            {
-                string Rad;
-               while ((Rad = Filen.ReadLine()) != null)
-                {
-                    String[] ProductInfo = Rad.Split(',');
-                   int productID = int.Parse(ProductInfo[0]);
-                    double Pris = double.Parse(ProductInfo[1]);
 
-                    var Produkt = new Produkt(productID,Pris, ProductInfo[2], ProductInfo[3]);
-                    ProductList.Add(Produkt);
-
-                }
-            }
 
             double TotalSumma;
             double Rabatt=0;
@@ -89,14 +75,15 @@ namespace Oksman_Kassa
                     Console.Write("Kommando:");
                 
                     string UserInput = Console.ReadLine();
-                    if (UserInput == "PAY") {
+                    if (UserInput == "PAY") 
+                    {
                         foreach (KassaItem K in ItemList)
                         {
-                        K.Rabatt = Rabatt;
-                        K.TotalRabatt = TotalRabatt;
-
+                            K.Rabatt = Rabatt;
+                            K.TotalRabatt = TotalRabatt;
                         }
-                        Kvitto.CreateKvitto(KvittoTime, ItemList); Console.Clear(); return; }
+                        Kvitto.CreateKvitto(KvittoTime, ItemList); Console.Clear(); return; 
+                    }
 
                         if (UserInput.Contains(" "))
                         {

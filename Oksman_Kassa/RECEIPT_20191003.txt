@@ -1,1 +1,1 @@
-Minced Meat,90,kg,30,40,2646,-54*#Fresh Potatoes,5,kg,40,30,1989.4,-40.6*Minced Meat,90,kg,20,40,1989.4,-40.6*Banana,6,st,5,10,1989.4,-40.6*#Minced Meat,90,kg,50,40,5390,-110*Fresh Potatoes,5,kg,40,30,5390,-110*Cola 1 Litre,20,st,40,20,5390,-110*#
+Minced Meat,90,kg,30,40,2646,-54*#Fresh Potatoes,5,kg,40,30,1989.4,-40.6*Minced Meat,90,kg,20,40,1989.4,-40.6*Banana,6,st,5,10,1989.4,-40.6*#Minced Meat,90,kg,50,40,5390,-110*Fresh Potatoes,5,kg,40,30,5390,-110*Cola 1 Litre,20,st,40,20,5390,-110*#Minced Meat,90,kg,40,40,3528,-72*#
