@@ -25,13 +25,13 @@ namespace Oksman_Kassa
 
         }
 
-        public static void OpenAdminMenu()
+        public static int OpenAdminMenu()
         {
             Console.WriteLine("ADMIN");
             Console.WriteLine("1. Ändra Produkt Namn");
             Console.WriteLine("2. Ändra Produkt Pris");
             Console.WriteLine("3. Begränsa Produkt Antal");
-            Console.WriteLine("4. Avsluta");
+            Console.WriteLine("4. Återvänd");
 
             int userInput;
             while (!int.TryParse(Console.ReadLine(), out userInput)) { Console.WriteLine("Ange endast siffror i din inmatning"); }

@@ -48,6 +48,7 @@ namespace Oksman_Kassa
             bool Kassa_Active = true;
             while(Kassa_Active)
             {
+                Console.Clear();
                 int UserInput = Menu.OpenStartMenu();
                 switch (UserInput)
                 {
@@ -69,18 +70,26 @@ namespace Oksman_Kassa
                         }
                     case 4: 
                     { 
-    
+                        Console.Clear();
                         int AdminInput = Menu.OpenAdminMenu(); 
+
+                            /*
+                            Console.WriteLine("ADMIN");
+                            Console.WriteLine("1. Ändra Produkt Namn");
+                            Console.WriteLine("2. Ändra Produkt Pris");
+                            Console.WriteLine("3. Begränsa Produkt Antal");
+                            Console.WriteLine("4. Återvänd");
+                            */
 
                             switch (AdminInput)
                             {
-                                case 1: {}
-                                case 2: {}
-                                case 3: {}
-                                case 4: { return; }
+                                case 1: { Produkt.SaveNewProducts(); break; }
+                                case 2: { Console.WriteLine("Ändra Produkt Pris"); break; }
+                                case 3: { Console.WriteLine("Ändra Produkt Antal"); break;}
+                                case 4: { break; }
 
                             }
-
+                            break;
                     }  
 
                 }
