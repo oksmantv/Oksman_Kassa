@@ -57,16 +57,27 @@ namespace Oksman_Kassa
                     case 3:
                         {
                             Console.WriteLine("Input Date: YYYY,MM,DD");
-                            string DateInput = Console.ReadLine();
-                            string[] dates = DateInput.Split(',');
-                            int[] TrueDate = Array.ConvertAll<string, int>(dates, int.Parse);
 
-                            DateTime Datum = new DateTime(TrueDate[0], TrueDate[1], TrueDate[2]);
-                            Kvitto.ReadKvittoShort(Datum);
-                            Kvitto.ReadKvitto(Datum);
-                            Console.WriteLine("Tryck Enter för att gå tillbaka..");
-                            Console.ReadLine();
-                            Console.Clear(); break;
+                                while(true)
+                                {
+                                    string DateInput = Console.ReadLine();
+
+                                    if(DateTime.TryParse(DateInput, out DateTime Datum)) 
+                                    {
+                                        //DateTime Datum = new DateTime(TrueDate[0], TrueDate[1], TrueDate[2]);
+                                        Kvitto.ReadKvittoShort(Datum);
+                                        Kvitto.ReadKvitto(Datum);
+                                        Console.WriteLine("Tryck Enter för att gå tillbaka..");
+                                        Console.ReadLine();
+                                        Console.Clear(); break;
+                                        
+                                    } 
+                                    else { Console.WriteLine("Fel typ av inmatning. Följ Formatet!"); 
+}
+
+                                }
+
+                            break;
                         }
                     case 4: 
                     { 
@@ -83,9 +94,9 @@ namespace Oksman_Kassa
 
                             switch (AdminInput)
                             {
-                                case 1: { Produkt.SaveNewProducts(); break; }
-                                case 2: { Console.WriteLine("Ändra Produkt Pris"); break; }
-                                case 3: { Console.WriteLine("Ändra Produkt Antal"); break;}
+                                case 1: { Produkt.ChangeName(); continue; }
+                                case 2: { Produkt.ChangePrice(); continue; }
+                                case 3: { Produkt.ChangeMax(); continue;}
                                 case 4: { break; }
 
                             }

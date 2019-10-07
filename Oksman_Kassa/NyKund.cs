@@ -71,10 +71,10 @@ namespace Oksman_Kassa
                     
  
                 
-                    Console.WriteLine("\nKommandon:\n<ProductID> <Antal>\nRETURN <ProductID>\nPAY");
+                    Console.WriteLine("\nKommandon:\n<ProductID> <Antal>\nRETURN <ProductID>\nPAY - Confirm the Order\nEXIT - Return to Main Menu");
                     Console.Write("Kommando:");
                 
-                    string UserInput = Console.ReadLine();
+                    string UserInput = Console.ReadLine().ToUpper();
                     if (UserInput == "PAY") 
                     {
                         foreach (KassaItem K in ItemList)
@@ -83,6 +83,11 @@ namespace Oksman_Kassa
                             K.TotalRabatt = TotalRabatt;
                         }
                         Kvitto.CreateKvitto(KvittoTime, ItemList); Console.Clear(); return; 
+                    }
+
+                    if (UserInput == "EXIT") 
+                    {
+                        Console.Clear(); return; 
                     }
 
                         if (UserInput.Contains(" "))

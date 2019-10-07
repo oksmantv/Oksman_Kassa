@@ -1,4 +1,4 @@
-10,6,st,Banana,0
+10,6,st,Apples,6
 20,20,st,Cola 1 Litre,0
 30,5,kg,Fresh Potatoes,0
-40,90,kg,Minced Meat,0
+40,90,kg,Minced Meat,5

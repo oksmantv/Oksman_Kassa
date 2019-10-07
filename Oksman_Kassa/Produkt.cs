@@ -51,15 +51,25 @@ namespace Oksman_Kassa
 
         public static void SaveProducts(List<Produkt> List)
         {
-
-               using (System.IO.StreamReader Filen = System.IO.File.OpenText(@"../../produkter.txt"))
-               {
+               string path = @"../../produkter.txt";
 
 
+            if (System.IO.File.Exists(path))
+            {
+                    
+                using (var Filen = System.IO.File.CreateText(path))
+                {
+                    
+                        foreach (Produkt P in List)
+                        {
+                            Filen.WriteLine(P.ProductID + "," + P.Pris + "," + P.Typ + "," + P.Namn + "," + P.MaxItems);
 
-               }
+                        }
 
 
+                }
+
+            }
 
 
         }
@@ -80,18 +90,39 @@ namespace Oksman_Kassa
             Console.ReadLine();
         }
 
-        public static void PrintProductsShort(List<Produkt> Lista)
+        public static void PrintProductsPrice(List<Produkt> Lista)
         {
+            Console.WriteLine("Current Product List");
             foreach (Produkt P in Lista)
             {
+                Console.WriteLine($"Produkt ID: {P.ProductID} - Pris: {P.Pris}");
 
+            }
+        }
+
+        public static void PrintProductsName(List<Produkt> Lista)
+        {
+            Console.WriteLine("Current Product List");
+            foreach (Produkt P in Lista)
+            {
+                
                 Console.WriteLine($"Produkt ID: {P.ProductID} - Namn: {P.Namn}");
 
             }
         }
 
+        public static void PrintProductsMax(List<Produkt> Lista)
+        {
+            Console.WriteLine("Current Product List");
+            foreach (Produkt P in Lista)
+            {
+                
+                Console.WriteLine($"Produkt ID: {P.ProductID} - Max Antal: {P.MaxItems}");
 
-        public static void SaveNewProducts()
+            }
+        }
+
+        public static void ChangeName()
         {  
 
             var ProduktLista = GetProducts();
@@ -100,12 +131,15 @@ namespace Oksman_Kassa
 
             while (ControlCheck)
             {
-
-                Console.WriteLine("Ändra Namn - Ange Produkt ID"); 
                 Console.Clear();
-                PrintProductsShort(ProduktLista);
+                Console.WriteLine("Ändra Namn - Ange Produkt ID\nAnge EXIT för att återvända"); 
 
-                int.TryParse(Console.ReadLine(),out userInput);
+                PrintProductsName(ProduktLista);
+
+                string input;
+                int.TryParse(input = Console.ReadLine(),out userInput);
+                if(input.ToUpper() == "EXIT") return;
+
                 foreach (Produkt P in ProduktLista)
                 {
                 
@@ -127,7 +161,153 @@ namespace Oksman_Kassa
             Console.WriteLine($"Ange det nya namnet på produkt ID: {userInput}");
             string NamnInput = Console.ReadLine();
             Console.Clear();
-            Console.WriteLine($"Produkt ID {userInput} har nu namnet {NamnInput}");
+            
+
+
+                foreach (Produkt P in ProduktLista)
+                {
+                
+                    if(P.ProductID == userInput)
+                    {
+                        P.Namn = NamnInput;
+                        break;
+
+                    }
+
+                }
+
+            PrintProductsName(ProduktLista);
+            SaveProducts(ProduktLista);
+            Console.WriteLine("Tryck Enter för att fortsätta..");
+            Console.ReadLine();
+
+
+        }
+
+        public static void ChangePrice()
+        {  
+
+            var ProduktLista = GetProducts();
+            bool ControlCheck = true;
+            int userInput = 0;
+            double priceInput = 0;
+
+            while (ControlCheck)
+            {
+                Console.Clear();
+                Console.WriteLine("Ändra Pris - Ange Produkt ID\nAnge EXIT för att återvända"); 
+                
+                PrintProductsPrice(ProduktLista);
+
+                string input;
+                int.TryParse(input = Console.ReadLine(),out userInput);
+                if(input.ToUpper() == "EXIT") return;
+
+                foreach (Produkt P in ProduktLista)
+                {
+                
+                    if(P.ProductID == userInput)
+                    {
+                        ControlCheck = false;
+                        break;
+
+                    }
+
+                }
+                if(!ControlCheck) break;
+                Console.WriteLine("Kunde ej hitta produkt ID. Tryck Enter för att försöka igen...");
+                Console.ReadLine();
+
+
+            }
+
+            Console.WriteLine($"Ange det nya priset på produkt ID: {userInput}");
+            while(!double.TryParse(Console.ReadLine(),out priceInput)) { Console.WriteLine("Ange endast siffror"); }
+
+            Console.Clear();
+            Console.WriteLine($"Produkt ID {userInput} har nu priset {priceInput.ToString("0.00")}");
+
+
+                foreach (Produkt P in ProduktLista)
+                {
+                
+                    if(P.ProductID == userInput)
+                    {
+                        P.Pris = priceInput;
+                        break;
+
+                    }
+
+                }
+
+            PrintProductsPrice(ProduktLista);
+            SaveProducts(ProduktLista);
+            Console.WriteLine("Tryck Enter för att fortsätta..");
+            Console.ReadLine();
+
+
+        }
+
+
+        public static void ChangeMax()
+        {  
+
+            var ProduktLista = GetProducts();
+            bool ControlCheck = true;
+            int userInput = 0;
+            int MaxInput = 0;
+
+            while (ControlCheck)
+            {
+                Console.Clear();
+                Console.WriteLine("Ändra Max Antal - Ange Produkt ID\nAnge EXIT för att återvända"); 
+                
+                PrintProductsMax(ProduktLista);
+
+                string input;
+                int.TryParse(input = Console.ReadLine(),out userInput);
+                if(input.ToUpper() == "EXIT") return;
+
+                foreach (Produkt P in ProduktLista)
+                {
+                
+                    if(P.ProductID == userInput)
+                    {
+                        ControlCheck = false;
+                        break;
+
+                    }
+
+                }
+                if(!ControlCheck) break;
+                Console.WriteLine("Kunde ej hitta produkt ID. Tryck Enter för att försöka igen...");
+                Console.ReadLine();
+
+
+            }
+
+            Console.WriteLine($"Ange det nya max antalet på produkt ID: {userInput}");
+            while(!int.TryParse(Console.ReadLine(),out MaxInput)) { Console.WriteLine("Ange endast siffror"); }
+
+            Console.Clear();
+            Console.WriteLine($"Produkt ID {userInput} har nu max antalet {MaxInput}");
+
+
+                foreach (Produkt P in ProduktLista)
+                {
+                
+                    if(P.ProductID == userInput)
+                    {
+                        P.MaxItems = MaxInput;
+                        break;
+
+                    }
+
+                }
+
+            PrintProductsMax(ProduktLista);
+            Console.WriteLine("Tryck Enter för att fortsätta..");
+            SaveProducts(ProduktLista);
             Console.ReadLine();
 
 

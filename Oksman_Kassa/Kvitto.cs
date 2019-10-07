@@ -88,104 +88,106 @@ namespace Oksman_Kassa
             string userInput;
             bool NotPosted=false;
 
-            string Text = System.IO.File.ReadAllText(ReceiptPath);
-            string[] KvittoList = Text.Split('#');
+            if (System.IO.File.Exists(ReceiptPath))
+            {
+                string Text = System.IO.File.ReadAllText(ReceiptPath);
+                string[] KvittoList = Text.Split('#');
  
 
-            Console.WriteLine("Ange löpnummer för att se hela kvittot. Avsluta med endast Enter..");
-            while(!int.TryParse(userInput = Console.ReadLine(),out UserNumber)) 
-            { 
-                    if(userInput == "") return;
-                    Console.WriteLine("Ange endast siffror för att hitta kvitto");
-            }
+                Console.WriteLine("Ange löpnummer för att se hela kvittot. Avsluta med endast Enter..");
+                while(!int.TryParse(userInput = Console.ReadLine(),out UserNumber)) 
+                { 
+                        if(userInput == "") return;
+                        Console.WriteLine("Ange endast siffror för att hitta kvitto");
+                }
 
-            Console.Clear();
+                Console.Clear();
 
-            foreach (string K in KvittoList)
-            {
-
-                var ItemListan = new List<KassaItem>();
-
-                string[] ItemList = K.Split('*');
-                foreach (String S in ItemList)
+                foreach (string K in KvittoList)
                 {
 
-                    if (S == "\r\n" || S == "") { }
-                    else
+                    var ItemListan = new List<KassaItem>();
+
+                    string[] ItemList = K.Split('*');
+                    foreach (String S in ItemList)
                     {
-                        string[] DataList = S.Split(',');
 
-                        string Namn = DataList[0];
-                        double Pris = double.Parse(DataList[1]);
-                        string Typ = DataList[2];
-                        double Amount = double.Parse(DataList[3]);
-                        int productID = int.Parse(DataList[4]);
-                        TotalRabatt = double.Parse(DataList[6]);
-                        Rabatt = double.Parse(DataList[7]);
-                        Number = int.Parse(DataList[8]);
+                        if (S == "\r\n" || S == "") { }
+                        else
+                        {
+                            string[] DataList = S.Split(',');
 
-                        var Item = new KassaItem(DataList[0], Pris, Typ, Amount, productID,TotalRabatt,Rabatt,Number);
-                        ItemListan.Add(Item);
+                            string Namn = DataList[0];
+                            double Pris = double.Parse(DataList[1]);
+                            string Typ = DataList[2];
+                            double Amount = double.Parse(DataList[3]);
+                            int productID = int.Parse(DataList[4]);
+                            TotalRabatt = double.Parse(DataList[6]);
+                            Rabatt = double.Parse(DataList[7]);
+                            Number = int.Parse(DataList[8]);
+
+                            var Item = new KassaItem(DataList[0], Pris, Typ, Amount, productID,TotalRabatt,Rabatt,Number);
+                            ItemListan.Add(Item);
+                        }
+
                     }
 
-                }
-
-                if (K == "\r\n" || K == "") { }
-                    else
-                    { 
+                    if (K == "\r\n" || K == "") { }
+                        else
+                        { 
 
 
-                            if (ItemListan.Count > 0)
-                            {
-
-
-
-                                double TotalSumma = 0;
-                                foreach (KassaItem C in ItemListan)
+                                if (ItemListan.Count > 0)
                                 {
-                                    if(C.Number == UserNumber)
+
+
+
+                                    double TotalSumma = 0;
+                                    foreach (KassaItem C in ItemListan)
                                     {
-                                        
-                                        if(!NotPosted)
+                                        if(C.Number == UserNumber)
                                         {
-                                            string Datum = Time.ToString("yyyy-MM-dd");
-                                            Console.WriteLine("KVITTO: {1}    {0}", Datum,UserNumber);
-                                            NotPosted=true;
-                                        }
-
-
-                                        String Namn = C.Namn.Replace("\r\n", string.Empty);
-                                        Console.WriteLine("{0} {1}{2} * {3} = {4}", Namn, C.Amount,C.Typ, C.Pris.ToString("0.00"), C.Total.ToString("0.00"));
-                                        TotalSumma += C.Total;
                                         
+                                            if(!NotPosted)
+                                            {
+                                                string Datum = Time.ToString("yyyy-MM-dd");
+                                                Console.WriteLine("KVITTO: {1}    {0}", Datum,UserNumber);
+                                                NotPosted=true;
+                                            }
+
+
+                                            String Namn = C.Namn.Replace("\r\n", string.Empty);
+                                            Console.WriteLine("{0} {1}{2} * {3} = {4}", Namn, C.Amount,C.Typ, C.Pris.ToString("0.00"), C.Total.ToString("0.00"));
+                                            TotalSumma += C.Total;
+                                        
+                                        }
                                     }
-                                }
                              
 
-                            if(TotalSumma > 0)
-                            {
-                                Console.WriteLine("Items Total: {0}", TotalSumma.ToString("0.00"));
-
-                                if (TotalSumma > 1000 && TotalSumma < 2000)
+                                if(TotalSumma > 0)
                                 {
-                                    Rabatt = (TotalSumma / 100) * -1;
-                                    TotalRabatt = TotalSumma - (TotalSumma / 100);
-                                    Console.WriteLine("Rabatt: {0}", Rabatt.ToString("0.00"));
-                                    Console.WriteLine("Total: {0}", TotalRabatt.ToString("0.00"));
-                                }
+                                    Console.WriteLine("Items Total: {0}", TotalSumma.ToString("0.00"));
 
-                                if (TotalSumma > 2000)
-                                {
-                                    Rabatt = ((TotalSumma / 100) * 2) * -1;
-                                    TotalRabatt = TotalSumma - (TotalSumma / 100);
-                                    Console.WriteLine("Rabatt: {0}", Rabatt.ToString("0.00"));
-                                    Console.WriteLine("Total: {0}", TotalRabatt.ToString("0.00"));
+                                    if (TotalSumma > 1000 && TotalSumma < 2000)
+                                    {
+                                        Rabatt = (TotalSumma / 100) * -1;
+                                        TotalRabatt = TotalSumma - (TotalSumma / 100);
+                                        Console.WriteLine("Rabatt: {0}", Rabatt.ToString("0.00"));
+                                        Console.WriteLine("Total: {0}", TotalRabatt.ToString("0.00"));
+                                    }
+
+                                    if (TotalSumma > 2000)
+                                    {
+                                        Rabatt = ((TotalSumma / 100) * 2) * -1;
+                                        TotalRabatt = TotalSumma - (TotalSumma / 100);
+                                        Console.WriteLine("Rabatt: {0}", Rabatt.ToString("0.00"));
+                                        Console.WriteLine("Total: {0}", TotalRabatt.ToString("0.00"));
+                                    }
                                 }
-                            }
+                        }
                     }
                 }
             }
-
 
         }
 
@@ -199,58 +201,62 @@ namespace Oksman_Kassa
             double TotalRabatt = 0;
             int Number=0;
 
-            string Text = System.IO.File.ReadAllText(ReceiptPath);
-            string[] KvittoList = Text.Split('#');
-            Console.Clear();
-
-            foreach (string K in KvittoList)
+            if (System.IO.File.Exists(ReceiptPath))
             {
 
-                var ItemListan = new List<KassaItem>();
+                string Text = System.IO.File.ReadAllText(ReceiptPath);
+                string[] KvittoList = Text.Split('#');
+                Console.Clear();
 
-                string[] ItemList = K.Split('*');
-                foreach (String S in ItemList)
+                foreach (string K in KvittoList)
                 {
 
-                    if (S == "\r\n" || S == "") { }
-                    else
+                    var ItemListan = new List<KassaItem>();
+
+                    string[] ItemList = K.Split('*');
+                    foreach (String S in ItemList)
                     {
-                        string[] DataList = S.Split(',');
 
-                        string Namn = DataList[0];
-                        double Pris = double.Parse(DataList[1]);
-                        string Typ = DataList[2];
-                        double Amount = double.Parse(DataList[3]);
-                        int productID = int.Parse(DataList[4]);
-                        TotalRabatt = double.Parse(DataList[6]);
-                        Rabatt = double.Parse(DataList[7]);
-                        Number = int.Parse(DataList[8]);
+                        if (S == "\r\n" || S == "") { }
+                        else
+                        {
+                            string[] DataList = S.Split(',');
 
-                        var Item = new KassaItem(DataList[0], Pris, Typ, Amount, productID,TotalRabatt,Rabatt,Number);
-                        ItemListan.Add(Item);
+                            string Namn = DataList[0];
+                            double Pris = double.Parse(DataList[1]);
+                            string Typ = DataList[2];
+                            double Amount = double.Parse(DataList[3]);
+                            int productID = int.Parse(DataList[4]);
+                            TotalRabatt = double.Parse(DataList[6]);
+                            Rabatt = double.Parse(DataList[7]);
+                            Number = int.Parse(DataList[8]);
+
+                            var Item = new KassaItem(DataList[0], Pris, Typ, Amount, productID,TotalRabatt,Rabatt,Number);
+                            ItemListan.Add(Item);
+                        }
+
                     }
 
-                }
+                    if (K == "\r\n" || K == "") { }
+                        else
+                        { 
+                            string Datum = Time.ToString("yyyy-MM-dd");
+                            Console.WriteLine("KVITTO: {1}    {0}", Datum,Number);
 
-                if (K == "\r\n" || K == "") { }
-                    else
-                    { 
-                        string Datum = Time.ToString("yyyy-MM-dd");
-                        Console.WriteLine("KVITTO: {1}    {0}", Datum,Number);
-
-                        if (ItemListan.Count > 0)
-                        {
-                            double TotalSumma = 0;
-                            foreach (KassaItem C in ItemListan)
+                            if (ItemListan.Count > 0)
                             {
-                                TotalSumma += C.Total;
-                            }
+                                double TotalSumma = 0;
+                                foreach (KassaItem C in ItemListan)
+                                {
+                                    TotalSumma += C.Total;
+                                }
 
-                        Console.WriteLine("Total: {0}\n", TotalSumma.ToString("0.00"));
+                            Console.WriteLine("Total: {0}\n", TotalSumma.ToString("0.00"));
+                        }
                     }
                 }
             }
-
+            else { Console.WriteLine("Kunde ej hitta kvitto från det datumet"); return; }
 
         }
     }
