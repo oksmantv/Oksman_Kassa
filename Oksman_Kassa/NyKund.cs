@@ -104,7 +104,7 @@ namespace Oksman_Kassa
                                         ItemList.Remove(P);
                                         break;
                                     }
-                                    else
+                                    else if (ProductID == P.ProductID && P.Amount > 1)
                                     {
                                         P.Amount = P.Amount -1;
                                         P.Total = P.Total - P.Pris;
@@ -118,7 +118,7 @@ namespace Oksman_Kassa
                                 {
                                     ProductID = int.Parse(KommandoInfo[0]);
                                     ProductAmount = int.Parse(KommandoInfo[1]);
-                                    if (ProductAmount < 0) continue;
+                                    if (ProductAmount <= 0) continue;
                                     break;
                                 }
                                 catch(Exception E) 
@@ -127,28 +127,58 @@ namespace Oksman_Kassa
                         }
                 }
 
-                    foreach (KassaItem T in ItemList)
-                    {
-                   
-                        if (T.ProductID == ProductID && T.Amount > 0)
-                        {
-                            T.Amount += ProductAmount;
-                            T.Total = T.Amount * T.Pris;
-                            isNotAdded=false;
-                        }
-
-                    }
+                    bool failed = false;
+                    int tempMax = 0;
 
                     foreach (Produkt P in ProductList) 
                     {
+ 
+                        if(P.ProductID == ProductID)
+                        { tempMax = P.MaxItems;}
+                       
+                    }
 
-                        if (ProductID == P.ProductID && isNotAdded)
+                        foreach (KassaItem T in ItemList)
                         {
-                            var Item = new KassaItem(P.Namn, P.Pris, P.Typ, ProductAmount,P.ProductID,TotalRabatt,Rabatt,Number);
-                            ItemList.Add(Item);
+                   
+                            if (T.ProductID == ProductID && T.Amount > 0)
+                            {
+                                double TempTotal = T.Amount + ProductAmount;
+                                if (TempTotal <= tempMax || tempMax==0) 
+                                { 
+                                    T.Amount += ProductAmount;
+                                    T.Total = T.Amount * T.Pris;
+                                    isNotAdded=false;
+                                    
+                                }
+                                else 
+                                {
+                                    Console.WriteLine($"Endast {tempMax} tillåtet, med dessa blir det {T.Amount + ProductAmount}. Försök igen..."); Console.ReadLine(); failed=true; break; 
+                                }
+
+                            }
 
                         }
 
+                    if(!failed) 
+                    {
+                        foreach (Produkt P in ProductList) 
+                        {
+
+                            if (ProductID == P.ProductID && isNotAdded)
+                            {
+                                if(P.MaxItems >= ProductAmount || P.MaxItems == 0) 
+                                {
+                                    var Item = new KassaItem(P.Namn, P.Pris, P.Typ, ProductAmount,P.ProductID,TotalRabatt,Rabatt,Number);
+                                    ItemList.Add(Item); 
+                                }
+                                else
+                                {
+                                    Console.WriteLine($"Endast {tempMax} tillåtet, med dessa blir det {ProductAmount}. Försök igen..."); Console.ReadLine(); failed=true; break;
+                                }
+                            }
+
+                        }
                     }
             }
 
