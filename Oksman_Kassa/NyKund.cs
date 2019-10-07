@@ -21,7 +21,7 @@ namespace Oksman_Kassa
             var ProductList = Produkt.GetProducts();
 
 
-
+            int Number = 1000;
             double TotalSumma;
             double Rabatt=0;
             double TotalRabatt=0;
@@ -44,9 +44,7 @@ namespace Oksman_Kassa
                         
                         foreach (KassaItem K in ItemList)
                         {
-                        
-                            Console.WriteLine("{0} {1} * {2} = {3}", K.Namn, K.Amount, K.Pris.ToString("0.00"), K.Total.ToString("0.00"));
-                        
+                            Console.WriteLine("{0} {1}{2} * {3} = {4}", K.Namn, K.Amount,K.Typ, K.Pris.ToString("0.00"), K.Total.ToString("0.00")); 
                             TotalSumma += K.Total;
                         }
 
@@ -141,7 +139,7 @@ namespace Oksman_Kassa
 
                         if (ProductID == P.ProductID && isNotAdded)
                         {
-                            var Item = new KassaItem(P.Namn, P.Pris, P.Typ, ProductAmount,P.ProductID,TotalRabatt,Rabatt);
+                            var Item = new KassaItem(P.Namn, P.Pris, P.Typ, ProductAmount,P.ProductID,TotalRabatt,Rabatt,Number);
                             ItemList.Add(Item);
 
                         }
