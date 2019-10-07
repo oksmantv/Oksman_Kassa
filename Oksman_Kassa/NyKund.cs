@@ -27,6 +27,7 @@ namespace Oksman_Kassa
             double TotalRabatt=0;
             int ProductID;
             int ProductAmount;
+            bool isNotAdded;
 
             while (true)
             {      
@@ -36,6 +37,7 @@ namespace Oksman_Kassa
                     Console.WriteLine("KASSA");
                     Console.WriteLine("KVITTO    {0}", KvittoTime);
                     TotalSumma = 0;
+                    isNotAdded = true;
 
                     if (ItemList.Count > 0)
                     {
@@ -94,14 +96,20 @@ namespace Oksman_Kassa
                                 foreach (KassaItem P in ItemList)
                                 {
 
-                                    if (ProductID == P.ProductID)
+                                    if (ProductID == P.ProductID && P.Amount <= 1)
                                     {
                                         ItemList.Remove(P);
                                         break;
                                     }
+                                    else
+                                    {
+                                        P.Amount = P.Amount -1;
+                                        P.Total = P.Total - P.Pris;
+                                    }
+
 
                                 }
-
+                                continue;
                             }
                                 try
                                 {
@@ -111,14 +119,27 @@ namespace Oksman_Kassa
                                     break;
                                 }
                                 catch(Exception E) 
-                                { Console.WriteLine (E.Message); Console.ReadLine(); }
+                                { Console.WriteLine (E); Console.ReadLine(); }
 
                         }
                 }
+
+                    foreach (KassaItem T in ItemList)
+                    {
+                   
+                        if (T.ProductID == ProductID && T.Amount > 0)
+                        {
+                            T.Amount += ProductAmount;
+                            T.Total = T.Amount * T.Pris;
+                            isNotAdded=false;
+                        }
+
+                    }
+
                     foreach (Produkt P in ProductList) 
                     {
 
-                        if (ProductID == P.ProductID)
+                        if (ProductID == P.ProductID && isNotAdded)
                         {
                             var Item = new KassaItem(P.Namn, P.Pris, P.Typ, ProductAmount,P.ProductID,TotalRabatt,Rabatt);
                             ItemList.Add(Item);

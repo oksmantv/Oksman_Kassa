@@ -55,7 +55,7 @@ namespace Oksman_Kassa
                     case 2: { Kassa_Active = false; return; }
                     case 3:
                         {
-                            Console.WriteLine("Input Date: 2019,10,02");
+                            Console.WriteLine("Input Date: YYYY,MM,DD");
                             string DateInput = Console.ReadLine();
                             string[] dates = DateInput.Split(',');
                             int[] TrueDate = Array.ConvertAll<string, int>(dates, int.Parse);

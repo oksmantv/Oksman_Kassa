@@ -75,7 +75,6 @@ namespace Oksman_Kassa
             String DatumFormat = Time.ToString("yyyMMdd");
 
             String ReceiptPath = @"../../RECEIPT_" + DatumFormat + ".txt";
-            String CountPath = @"../../TotalCount.txt";
 
             string Text = System.IO.File.ReadAllText(ReceiptPath);
             string[] KvittoList = Text.Split('#');
