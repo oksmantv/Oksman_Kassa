@@ -4,39 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-/*
-Ett kassasystem är ju ett sånt som kassapersonalen använder i en butik för att registrera försäljning
-och skapa ett kvitto.
-
-Alla produkter lagras i en textfil. När programmet startas läses en textfil in med data och alla objekt
-skapas. Tips! Läs på mer om ToString och Parse som kan ta fler parametrar som styr hur tal och
-datum formateras och tolkas. Kolla in InvariantCulture som är en variant av CultureInfo som ofta
-används för import och export.
-
- Följande data ska lagras på Produkt,
-produktid (snabbkommando i kassan, ex ”300” för bananer nedan)
-pris
-pris typ – är det per kilo eller per styck
-produktnamn
-
-När man kör kassan ska det se ut ungefär som följer:
-
-Vid val av 1 startas då en ny försäljning
-Systemet ska då visa aktuellt kvitto (de produkter som registrerats) samt en kommandoinmatning. 
-
-Krav för Godkänt
-Kommandoinmatningen är antingen
-PAY (då ”fejkar” vi att betalning sker) och kvittot sparas i en fil (se nedan) och programmet får
-tillbaka till menyn innan
-produktid antal (ex ex 300 1, betyder lägg till en av produktid ”300”)
-Kvitton sparas ned vid PAY till en fil RECEIPT_yyyyMMdd.txt (dagens datum). OBS! Det blir alltså
-FLERA kvitton i samma fil. Fundera ut och implementera ngn slags särskiljare så man kan skilja olika
-kvitton åt
-Objektorienterad kod!
-Console-applikation
-Felhantering: korrekta inmatningar osv osv
-// TEST
-*/
 
 
 namespace Oksman_Kassa
@@ -54,44 +21,10 @@ namespace Oksman_Kassa
                 {
                     case 1: { NyKund.Kassa(); break; }
                     case 2: { Kassa_Active = false; return; }
-                    case 3:
-                        {
-                            Console.WriteLine("Input Date: YYYY,MM,DD");
-
-                                while(true)
-                                {
-                                    string DateInput = Console.ReadLine();
-
-                                    if(DateTime.TryParse(DateInput, out DateTime Datum)) 
-                                    {
-                                        //DateTime Datum = new DateTime(TrueDate[0], TrueDate[1], TrueDate[2]);
-                                        Kvitto.ReadKvittoShort(Datum);
-                                        Kvitto.ReadKvitto(Datum);
-                                        Console.WriteLine("Tryck Enter för att gå tillbaka..");
-                                        Console.ReadLine();
-                                        Console.Clear(); break;
-                                        
-                                    } 
-                                    else { Console.WriteLine("Fel typ av inmatning. Följ Formatet!"); 
-}
-
-                                }
-
-                            break;
-                        }
-                    case 4: 
+                    case 3: 
                     { 
                         Console.Clear();
                         int AdminInput = Menu.OpenAdminMenu();
-
-                            /*
-                            Console.WriteLine("ADMIN");
-                            Console.WriteLine("1. Ändra Produkt Namn");
-                            Console.WriteLine("2. Ändra Produkt Pris");
-                            Console.WriteLine("3. Begränsa Produkt Antal");
-                            Console.WriteLine("4. Ändra Kampanj");
-                            Console.WriteLine("5. Återvänd");
-                            */
 
                             switch (AdminInput)
                             {
@@ -99,7 +32,34 @@ namespace Oksman_Kassa
                                 case 2: { Produkt.ChangePrice(); continue; }
                                 case 3: { Produkt.ChangeMax(); continue;}
                                 case 4: { Campaign.CampaignWrite(); continue;}
-                                case 5: { break; }
+                                case 5:
+                                    {
+                                        Console.WriteLine("Input Date: YYYY,MM,DD");
+
+                                        while (true)
+                                        {
+                                            string DateInput = Console.ReadLine();
+
+                                            if (DateTime.TryParse(DateInput, out DateTime Datum))
+                                            {
+
+                                                Kvitto.ReadKvittoShort(Datum);
+                                                Kvitto.ReadKvitto(Datum);
+                                                Console.WriteLine("Tryck Enter för att gå tillbaka..");
+                                                Console.ReadLine();
+                                                Console.Clear(); break;
+
+                                            }
+                                            else
+                                            {
+                                                Console.WriteLine("Fel typ av inmatning. Följ Formatet!");
+                                            }
+
+                                        }
+
+                                        break;
+                                    }
+                                case 6: { break; }
 
                             }
                             break;
