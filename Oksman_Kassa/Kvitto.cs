@@ -14,7 +14,7 @@ namespace Oksman_Kassa
             var Listan = List;
             int Count=1000;
 
-            String DatumFormat = Time.ToString("yyyMMdd");
+            String DatumFormat = Time.ToString("yyyyMMdd");
             String TimeFormat = Time.ToString("hhmmss");
             String ReceiptPath = @"../../RECEIPT_" + DatumFormat + ".txt";
 

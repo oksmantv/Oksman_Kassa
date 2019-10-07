@@ -81,6 +81,7 @@ namespace Oksman_Kassa
                         {
                             K.Rabatt = Rabatt;
                             K.TotalRabatt = TotalRabatt;
+                            K.Pris = Campaign.CampaignRead(K.ProductID,K.Pris);
                         }
                         Kvitto.CreateKvitto(KvittoTime, ItemList); Console.Clear(); return; 
                     }
@@ -169,6 +170,7 @@ namespace Oksman_Kassa
                             {
                                 if(P.MaxItems >= ProductAmount || P.MaxItems == 0) 
                                 {
+                                    P.Pris = Campaign.CampaignRead(ProductID,P.Pris);
                                     var Item = new KassaItem(P.Namn, P.Pris, P.Typ, ProductAmount,P.ProductID,TotalRabatt,Rabatt,Number);
                                     ItemList.Add(Item); 
                                 }

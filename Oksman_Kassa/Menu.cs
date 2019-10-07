@@ -31,7 +31,8 @@ namespace Oksman_Kassa
             Console.WriteLine("1. Ändra Produkt Namn");
             Console.WriteLine("2. Ändra Produkt Pris");
             Console.WriteLine("3. Begränsa Produkt Antal");
-            Console.WriteLine("4. Återvänd");
+            Console.WriteLine("4. Ändra Kampanj");
+            Console.WriteLine("5. Återvänd");
 
             int userInput;
             while (!int.TryParse(Console.ReadLine(), out userInput)) { Console.WriteLine("Ange endast siffror i din inmatning"); }

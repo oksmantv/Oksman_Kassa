@@ -82,14 +82,15 @@ namespace Oksman_Kassa
                     case 4: 
                     { 
                         Console.Clear();
-                        int AdminInput = Menu.OpenAdminMenu(); 
+                        int AdminInput = Menu.OpenAdminMenu();
 
                             /*
                             Console.WriteLine("ADMIN");
                             Console.WriteLine("1. Ändra Produkt Namn");
                             Console.WriteLine("2. Ändra Produkt Pris");
                             Console.WriteLine("3. Begränsa Produkt Antal");
-                            Console.WriteLine("4. Återvänd");
+                            Console.WriteLine("4. Ändra Kampanj");
+                            Console.WriteLine("5. Återvänd");
                             */
 
                             switch (AdminInput)
@@ -97,7 +98,7 @@ namespace Oksman_Kassa
                                 case 1: { Produkt.ChangeName(); continue; }
                                 case 2: { Produkt.ChangePrice(); continue; }
                                 case 3: { Produkt.ChangeMax(); continue;}
-                                case 4: {  continue;}
+                                case 4: { Campaign.CampaignWrite(); continue;}
                                 case 5: { break; }
 
                             }

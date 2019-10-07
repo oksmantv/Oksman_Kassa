@@ -15,16 +15,16 @@ namespace Oksman_Kassa
         public string Typ;
         public string Namn;
         public int MaxItems;
-        public double CampaignPrice;
 
-        public Produkt(int productID, double pris, string typ, string namn, int maxItems, double campaignPrice)
+
+        public Produkt(int productID, double pris, string typ, string namn, int maxItems)
         {
             this.ProductID = productID;
             this.Pris = pris;
             this.Typ = typ;
             this.Namn = namn;
             this.MaxItems = maxItems;
-            this.CampaignPrice = campaignPrice;
+
         }
 
         public static List<Produkt> GetProducts()
@@ -40,9 +40,9 @@ namespace Oksman_Kassa
                         int productID = int.Parse(ProductInfo[0]);
                         double Pris = double.Parse(ProductInfo[1]);
                         int MaxItems = int.Parse(ProductInfo[4]);
-                        double CampaignPrice = double.Parse(ProductInfo[5]);
 
-                        var Produkt = new Produkt(productID,Pris, ProductInfo[2], ProductInfo[3], MaxItems,CampaignPrice);
+
+                        var Produkt = new Produkt(productID,Pris, ProductInfo[2], ProductInfo[3], MaxItems);
                         ProductList.Add(Produkt);
 
                     }
