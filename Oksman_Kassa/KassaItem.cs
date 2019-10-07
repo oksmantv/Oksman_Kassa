@@ -4,8 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-// TEST
-
 namespace Oksman_Kassa
 {
     public class KassaItem
@@ -18,8 +16,9 @@ namespace Oksman_Kassa
         public int ProductID;
         public double TotalRabatt;
         public double Rabatt;
+        public int Number;
 
-        public KassaItem(string namn, double pris, string typ, double amount, int productID,double TotalRabatt,double Rabatt)
+        public KassaItem(string namn, double pris, string typ, double amount, int productID, double totalRabatt,double rabatt,int number)
         {
             this.Amount = amount;
             this.Pris = pris;
@@ -27,9 +26,9 @@ namespace Oksman_Kassa
             this.Namn = namn;
             this.Total = pris * amount;
             this.ProductID = productID;
-            this.TotalRabatt = TotalRabatt;
-            this.Rabatt = Rabatt;
-
+            this.TotalRabatt = totalRabatt;
+            this.Rabatt = rabatt;
+            this.Number = number;
         }
 
     }
