@@ -174,7 +174,7 @@ namespace Oksman_Kassa
                                 }
                                 else
                                 {
-                                    Console.WriteLine($"Endast {tempMax} tillåtet, med dessa blir det {ProductAmount}. Försök igen..."); Console.ReadLine(); failed=true; break;
+                                    Console.WriteLine($"Endast {tempMax} tillåtet, med dessa blir det {ProductAmount}. Försök igen..."); Console.ReadLine(); break;
                                 }
                             }
 

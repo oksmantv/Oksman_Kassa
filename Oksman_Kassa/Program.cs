@@ -97,7 +97,8 @@ namespace Oksman_Kassa
                                 case 1: { Produkt.ChangeName(); continue; }
                                 case 2: { Produkt.ChangePrice(); continue; }
                                 case 3: { Produkt.ChangeMax(); continue;}
-                                case 4: { break; }
+                                case 4: {  continue;}
+                                case 5: { break; }
 
                             }
                             break;
