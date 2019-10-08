@@ -50,7 +50,7 @@ namespace Oksman_Kassa
 
                             Console.WriteLine("Items Total: {0}", TotalSumma.ToString("0.00"));
 
-                           if (TotalSumma > 1000 && TotalSumma < 2000)
+                           if (TotalSumma >= 1000 && TotalSumma < 2000)
                             {
                                 Rabatt = (TotalSumma * 0.01) * -1;
                                 TotalRabatt = TotalSumma * 0.99;
@@ -59,7 +59,7 @@ namespace Oksman_Kassa
                               
                             }
 
-                            else if (TotalSumma > 2000)
+                            else if (TotalSumma >= 2000)
                             {
                                 Rabatt = (TotalSumma * 0.02) * -1;
                                 TotalRabatt = TotalSumma * 0.98;
