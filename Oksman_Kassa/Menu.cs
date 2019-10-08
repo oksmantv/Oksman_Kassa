@@ -74,7 +74,7 @@ namespace Oksman_Kassa
                 {
                     case 1: { Campaign.CampaignDateChange(); break; }
                     case 2: { Campaign.CampaignPriceChange(); break; }
-                    case 3: { Campaign.CampaignPriceRemove(); break; }
+                    case 3: { Campaign.CampaignRemove(); break; }
                     case 4: { return; }
                     default: { Console.WriteLine("Fel inmatning. Följ Menyns gränser."); break; }
 
@@ -131,6 +131,19 @@ namespace Oksman_Kassa
             }
             Console.Clear();
             return Datum1;
+        }
+
+        public static double ReturnPrice()
+        {
+            while(true)
+            { 
+                double price;
+                while(!double.TryParse(Console.ReadLine(),out price)) { Console.WriteLine("Fel inmatning. Ange endast siffror."); }
+                if (price > 0)
+                    return price;
+                else
+                    Console.WriteLine("Fel inmatning. Måste vara över 0.");
+            }
         }
     }
 }

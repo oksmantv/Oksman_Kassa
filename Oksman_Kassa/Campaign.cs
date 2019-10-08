@@ -121,12 +121,18 @@ namespace Oksman_Kassa
                     {
                         C.Date1 = Date1;
                         C.Date2 = Date2;
+
+                        if(C.CampaignPrice > 0)
+                        Console.WriteLine($"Produkt ID: {C.ProductID} har nu kampanj från {Date1.ToString("yyyy/MM/dd")} till {Date2.ToString("yyyy/MM/dd")} för {C.CampaignPrice}kr");
+                        else
+                        Console.WriteLine($"Produkt ID: {C.ProductID} har nu kampanj från {Date1.ToString("yyyy/MM/dd")} till {Date2.ToString("yyyy/MM/dd")}");
+
                     }
 
                 }
-
+                Console.ReadLine();
                 CampaignWrite(Campaigns);
-
+                break;
 
 
 
@@ -137,13 +143,84 @@ namespace Oksman_Kassa
 
         public static void CampaignPriceChange()
         {
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("Ändra Pris: Ange det produkt ID du vill ändra.");
+                bool isFound = false;
+                int IdInput = Menu.ReturnMenuInput();
+                int SelectedID = 0;
+                var Products = Produkt.GetProducts();
+
+                foreach (Produkt P in Products)
+                {
+                    if (P.ProductID == IdInput)
+                    {
+
+                        SelectedID = IdInput;
+                        isFound = true;
+                    }
+
+
+                }
+                if (!isFound) { Console.WriteLine("Hittade inte produkten. Försök igen.."); continue; }
+
+                Console.Clear();
+                Console.Write("Ange Kampanj Pris: ");
+                Double Price = Menu.ReturnPrice();
+
+                var Campaigns = ReturnCampaignFile();
+
+                foreach (Campaign C in Campaigns)
+                {
+
+                    if (C.ProductID == SelectedID)
+                    {
+                        C.CampaignPrice = Price;
+                        if (C.CampaignPrice > 0)
+                            Console.WriteLine($"Produkt ID: {C.ProductID} har nu kampanj från {C.Date1.ToString("yyyy/MM/dd")} till {C.Date2.ToString("yyyy/MM/dd")} för {Price}kr");
+                        else
+                            Console.ReadLine();
+
+                    }
+
+                }
+
+                Console.ReadLine();
+                CampaignWrite(Campaigns);
+                break;
+
+            }
 
 
         }
 
-        public static void CampaignPriceRemove()
+        public static void CampaignRemove()
         {
+            while(true)
+            {
 
+                Console.Clear();
+                Console.WriteLine("Ta Bort Kampanj: Ange det produkt ID du vill ändra.");
+                int IdInput = Menu.ReturnMenuInput();
+                var Campaigns = ReturnCampaignFile();
+
+                foreach (Campaign C in Campaigns)
+                {
+
+                    if (C.ProductID == IdInput)
+                    {
+                        C.Date1 = new DateTime (0001, 01, 01);
+                        C.Date2 = new DateTime (0001, 01, 01);
+                        Console.WriteLine($"Produkt ID: {C.ProductID} har nu ingen kampanj.");
+
+                    }
+
+                }
+                Console.ReadLine();
+                CampaignWrite(Campaigns);
+                break;
+            }
 
         }
 
@@ -194,7 +271,7 @@ namespace Oksman_Kassa
                 foreach (Campaign C in Campaigns)
                 {
 
-                    Console.WriteLine(C.ProductID + "," + C.Date1 + "," + C.Date2 + "," + C.CampaignPrice);
+                    Filen.WriteLine(C.ProductID + "," + C.Date1.ToString("yyyy/MM/dd") + "," + C.Date2.ToString("yyyy/MM/dd") + "," + C.CampaignPrice);
 
                 }
 
