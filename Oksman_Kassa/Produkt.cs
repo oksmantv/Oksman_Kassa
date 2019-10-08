@@ -101,6 +101,7 @@ namespace Oksman_Kassa
                 Console.WriteLine($"Produkt ID: {P.ProductID} - Pris: {P.Pris}");
 
             }
+            Console.WriteLine();
         }
 
         public static void PrintProductsName(List<Produkt> Lista)
@@ -112,6 +113,7 @@ namespace Oksman_Kassa
                 Console.WriteLine($"Produkt ID: {P.ProductID} - Namn: {P.Namn}");
 
             }
+            Console.WriteLine();
         }
 
         public static void PrintProductsMax(List<Produkt> Lista)
@@ -123,6 +125,7 @@ namespace Oksman_Kassa
                 Console.WriteLine($"Produkt ID: {P.ProductID} - Max Antal: {P.MaxItems}");
 
             }
+            Console.WriteLine();
         }
 
         public static void ChangeName()
@@ -130,14 +133,16 @@ namespace Oksman_Kassa
 
             var ProduktLista = GetProducts();
             bool ControlCheck = true;
+            string NamnInput;
             int userInput = 0;
 
             while (ControlCheck)
             {
                 Console.Clear();
+                PrintProductsName(ProduktLista);
                 Console.WriteLine("Ändra Namn - Ange Produkt ID\nAnge EXIT för att återvända"); 
 
-                PrintProductsName(ProduktLista);
+                
 
                 string input;
                 int.TryParse(input = Console.ReadLine(),out userInput);
@@ -162,13 +167,19 @@ namespace Oksman_Kassa
             }
 
             Console.WriteLine($"Ange det nya namnet på produkt ID: {userInput}");
-            string NamnInput = Console.ReadLine();
-            Console.Clear();
-            
+
+            while(true)
+            { 
+                NamnInput = Console.ReadLine();
+
+                if (!NamnInput.All(Char.IsLetter) || NamnInput == "") { Console.WriteLine("Ange ett namn endast med bokstäver."); continue; }
+                Console.Clear();
+                break;
+            }
 
 
-                foreach (Produkt P in ProduktLista)
-                {
+            foreach (Produkt P in ProduktLista)
+            {
                 
                     if(P.ProductID == userInput)
                     {
@@ -177,9 +188,9 @@ namespace Oksman_Kassa
 
                     }
 
-                }
+            }
 
-            PrintProductsName(ProduktLista);
+            
             SaveProducts(ProduktLista);
             Console.WriteLine("Tryck Enter för att fortsätta..");
             Console.ReadLine();
@@ -198,9 +209,10 @@ namespace Oksman_Kassa
             while (ControlCheck)
             {
                 Console.Clear();
+                PrintProductsPrice(ProduktLista);
                 Console.WriteLine("Ändra Pris - Ange Produkt ID\nAnge EXIT för att återvända"); 
                 
-                PrintProductsPrice(ProduktLista);
+               
 
                 string input;
                 int.TryParse(input = Console.ReadLine(),out userInput);
@@ -225,9 +237,7 @@ namespace Oksman_Kassa
             }
 
             Console.WriteLine($"Ange det nya priset på produkt ID: {userInput}");
-            while(!double.TryParse(Console.ReadLine(),out priceInput)) { Console.WriteLine("Ange endast siffror"); }
-
-            Console.Clear();
+            while(!double.TryParse(Console.ReadLine(),out priceInput) || priceInput < 1) { Console.WriteLine("Ange endast siffror. Inte under 0."); }
             Console.WriteLine($"Produkt ID {userInput} har nu priset {priceInput.ToString("0.00")}");
 
 
@@ -243,7 +253,6 @@ namespace Oksman_Kassa
 
                 }
 
-            PrintProductsPrice(ProduktLista);
             SaveProducts(ProduktLista);
             Console.WriteLine("Tryck Enter för att fortsätta..");
             Console.ReadLine();
@@ -263,9 +272,10 @@ namespace Oksman_Kassa
             while (ControlCheck)
             {
                 Console.Clear();
+                PrintProductsMax(ProduktLista);
                 Console.WriteLine("Ändra Max Antal - Ange Produkt ID\nAnge EXIT för att återvända"); 
                 
-                PrintProductsMax(ProduktLista);
+                
 
                 string input;
                 int.TryParse(input = Console.ReadLine(),out userInput);
@@ -290,7 +300,7 @@ namespace Oksman_Kassa
             }
 
             Console.WriteLine($"Ange det nya max antalet på produkt ID: {userInput}");
-            while(!int.TryParse(Console.ReadLine(),out MaxInput)) { Console.WriteLine("Ange endast siffror"); }
+            while(!int.TryParse(Console.ReadLine(),out MaxInput) || MaxInput < 0) { Console.WriteLine("Ange endast siffror. Inte under 0."); }
 
             Console.Clear();
             Console.WriteLine($"Produkt ID {userInput} har nu max antalet {MaxInput}");

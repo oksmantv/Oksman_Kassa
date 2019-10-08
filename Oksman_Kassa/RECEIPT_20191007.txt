@@ -1,1 +1,0 @@
-Apples,6,st,3,18,1,0,0,1000*Fresh Potatoes,5,kg,2,10,3,0,0,1000*Cola 1 Litre,20,st,3,60,2,0,0,1000*Minced Meat,90,kg,4,360,4,0,0,1000*Salmon Filet,120,kg,2,240,6,0,0,1000*Jasmin Rice,10,kg,2,20,7,0,0,1000*#Apples,6,st,5,30,1,0,0,1001*Cola 1 Litre,20,st,7,140,2,0,0,1001*Jasmin Rice,10,kg,2,20,7,0,0,1001*Camel Blue,50,st,2,100,8,0,0,1001*#

@@ -145,5 +145,17 @@ namespace Oksman_Kassa
                     Console.WriteLine("Fel inmatning. Måste vara över 0.");
             }
         }
+
+        public static void PrintProducts()
+        {
+            var Lista = Produkt.GetProducts();
+
+            foreach (Produkt P in Lista)
+            {
+                Console.WriteLine($"{P.ProductID}: {P.Namn} - Orginal Pris: {P.Pris}");
+            }
+            Console.WriteLine("");
+
+        }
     }
 }

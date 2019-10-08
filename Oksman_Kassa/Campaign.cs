@@ -76,6 +76,7 @@ namespace Oksman_Kassa
             while (true)
             {
                 Console.Clear();
+                Menu.PrintProducts();
                 Console.WriteLine("Ändra Datum: Ange det produkt ID du vill ändra.");
                 bool isFound = false;
                 DateTime Date1;
@@ -146,6 +147,7 @@ namespace Oksman_Kassa
             while (true)
             {
                 Console.Clear();
+                Menu.PrintProducts();
                 Console.WriteLine("Ändra Pris: Ange det produkt ID du vill ändra.");
                 bool isFound = false;
                 int IdInput = Menu.ReturnMenuInput();
@@ -201,6 +203,7 @@ namespace Oksman_Kassa
             {
 
                 Console.Clear();
+                Menu.PrintProducts();
                 Console.WriteLine("Ta Bort Kampanj: Ange det produkt ID du vill ändra.");
                 int IdInput = Menu.ReturnMenuInput();
                 var Campaigns = ReturnCampaignFile();
